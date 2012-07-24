@@ -13,7 +13,8 @@ namespace TrainingTasks3
         public void Task3Requirements()
         {
             // Implement the following API with tests.
-            // Leave this test alone. It should obviously compile once finished.
+            // Leave this test alone. It should obviously compile once finished
+
 
             MenuConfig menuConfig = Menu.Config(options =>
             {
@@ -21,7 +22,25 @@ namespace TrainingTasks3
                 options.AddDynamic(context => { return Enumerable.Empty<MenuItem>(); });   // context is MenuContext, returns IEnumerable<MenuItem>
                 options.Visible((context, menuItem) => true);                              // context is MenuContext, menuItem is MenuItem, returns bool
             });
-            
+
         }
+
+        [Test]
+        public void TestTask3Requirements()
+        {
+            MenuConfig menuConfig = Menu.Config(options =>
+            {
+                options.AddStatic("/test", "Test");
+                options.AddDynamic(context => { return Enumerable.Empty<MenuItem>(); });
+                options.Visible((context, menuItem) => true);
+            });
+
+            //Assertions
+            Assert.AreEqual("/test", menuConfig.menuItem.url);
+            Assert.AreEqual("Test", menuConfig.menuItem.text);
+
+
+        }
+
     }
 }
