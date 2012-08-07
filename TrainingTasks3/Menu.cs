@@ -9,10 +9,12 @@ namespace TrainingTasks3
 {
     public class Menu
     {
-        public static MenuConfig Config(Action<MenuConfig> config)
+        public static MenuConfig Config(Action<IMenuConfigBuilder> config)
         {
             MenuConfig menuConfig = new MenuConfig();
-            config(menuConfig);
+            MenuConfigBuilder menuConfigBuilder = new MenuConfigBuilder(menuConfig);
+
+            config(menuConfigBuilder);
             return menuConfig;
 
         }

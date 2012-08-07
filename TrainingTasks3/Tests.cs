@@ -36,8 +36,8 @@ namespace TrainingTasks3
             });
 
             //Assertions
-            Assert.AreEqual("/test", menuConfig.menuItem.url);
-            Assert.AreEqual("Test", menuConfig.menuItem.text);
+            Assert.AreEqual("/test", menuConfig.StaticMenuItems);
+            Assert.AreEqual("Test", menuConfig.StaticMenuItems);
 
 
         }
