@@ -5,31 +5,90 @@ using System.Text;
 
 namespace TrainingTasks4
 {
-    class Html
+    public class Html
     {
+        public static Html html;
+        public static Dictionary<string, string> htmlAttrs;
+        public static string htmlString;
+
+        public Html()
+        {
+
+        }
 
         public static Html Tag(string tag)
         {
+            htmlString = "<" + tag + "></" + tag + ">";
 
-            throw new NotImplementedException();
+            htmlAttrs = new Dictionary<string, string>();
+            html = new Html();
+
+            return html;
         }
 
-        public Html Attr(string p, string p_2)
+        public Html Attr(string attribute, string value)
         {
-            throw new NotImplementedException();
+
+            htmlAttrs.Add(attribute, value);
+            return html;
         }
 
         public Html Modify(Action<Html> action)
         {
-            throw new NotImplementedException();
+            action(this);
+            return html;
         }
 
 
-        public Html AddClass(string p)
+        public Html AddClass(string value)
         {
-            throw new NotImplementedException();
+            htmlAttrs.Add("class", value);
+            return html;
         }
 
+        //override ToString()
+        public override string ToString()
+        {
+            string htmlMiddle = "";
+
+            foreach (KeyValuePair<String, String> entry in htmlAttrs)
+            {
+                htmlMiddle += " " + entry.Key + "=\"" + entry.Value + "\"";
+
+            }
+
+            return htmlString.Replace("><", htmlMiddle + "><");
+        }
+
+        //override Equals
+        public override bool Equals(System.Object obj)
+        {
+
+            if (obj == null)
+            {
+                return false;
+            }
+
+            return (html == (Html)obj);
+        }
+
+        //override HashCode
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        //override == operator
+        public static bool operator ==(string c2, Html c1)
+        {
+            return c1.ToString() == c2;
+        }
+
+        //override != operator
+        public static bool operator !=(string c2, Html c1)
+        {
+            return c1.ToString() != c2;
+        }
 
     }
 }
