@@ -7,88 +7,95 @@ namespace TrainingTasks4
 {
     public class Html
     {
-        public static Html html;
-        public static Dictionary<string, string> htmlAttrs;
-        public static string htmlString;
+        public Dictionary<string, string> htmlAttrs;
+        public List<string> classes;
+        public string tagName;
 
-        public Html()
+        public Html(string tag)
         {
+            tagName = tag;
 
+            htmlAttrs = new Dictionary<string, string>();
+            classes = new List<string>();
         }
 
         public static Html Tag(string tag)
         {
-            htmlString = "<" + tag + "></" + tag + ">";
 
-            htmlAttrs = new Dictionary<string, string>();
-            html = new Html();
-
-            return html;
+            return new Html(tag);
         }
 
         public Html Attr(string attribute, string value)
         {
 
             htmlAttrs.Add(attribute, value);
-            return html;
+            return this;
+        }
+
+        public Html AddClass(string value)
+        {
+            classes.Add(value);
+            return this;
         }
 
         public Html Modify(Action<Html> action)
         {
             action(this);
-            return html;
-        }
-
-
-        public Html AddClass(string value)
-        {
-            htmlAttrs.Add("class", value);
-            return html;
+            return this;
         }
 
         //override ToString()
         public override string ToString()
         {
-            string htmlMiddle = "";
+            string attrString = "";
+            string classesString = "";
 
             foreach (KeyValuePair<String, String> entry in htmlAttrs)
             {
-                htmlMiddle += " " + entry.Key + "=\"" + entry.Value + "\"";
+                attrString += " " + entry.Key + "=\"" + entry.Value + "\"";
 
             }
+            
+            if (classes.Any())
+                classesString = " class=\"" + string.Join(" ", classes) + "\"";
 
-            return htmlString.Replace("><", htmlMiddle + "><");
+            return "<" + this.tagName + attrString + classesString + "></" + this.tagName + ">";
         }
 
-        //override Equals
-        public override bool Equals(System.Object obj)
+        public static implicit operator string(Html html)
         {
-
-            if (obj == null)
-            {
-                return false;
-            }
-
-            return (html == (Html)obj);
+            return html.ToString();
         }
 
-        //override HashCode
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        ////override Equals
+        //public override bool Equals(System.Object obj)
+        //{
 
-        //override == operator
-        public static bool operator ==(string c2, Html c1)
-        {
-            return c1.ToString() == c2;
-        }
+        //    if (obj == null)
+        //    {
+        //        return false;
+        //    }
 
-        //override != operator
-        public static bool operator !=(string c2, Html c1)
-        {
-            return c1.ToString() != c2;
-        }
+        //    return (this == (Html)obj);
+        //}
+
+        ////override HashCode
+        //public override int GetHashCode()
+        //{
+        //    return base.GetHashCode();
+        //}
+
+        ////override == operator
+        //public static bool operator ==(string c2, Html c1)
+        //{
+        //    return c1.ToString() == c2;
+        //}
+
+        ////override != operator
+        //public static bool operator !=(string c2, Html c1)
+        //{
+        //    return c1.ToString() != c2;
+        //}
 
     }
 }
