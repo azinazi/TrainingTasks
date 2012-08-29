@@ -10,6 +10,23 @@ namespace TrainingTasks4
     public class HtmlTests
     {
         [Test]
+        public void BasicHtmlBuilderWithHelper()
+        {
+
+            InputData inputData = new InputData { Location = "St Kilda" };
+            HtmlHelper<InputData> htmlHelper = new HtmlHelper<InputData>(inputData);
+
+            var html = htmlHelper.InputFor(x => x.Location);
+
+            Assert.AreEqual("<input type=\"text\" name=\"Location\" value=\"St Kilda\" />", html.ToString());
+        }
+
+        public class InputData
+        {
+            public string Location { get; set; }
+        }
+
+        [Test]
         public void BasicHtmlBuilder()
         {
             Html html = Html.Tag("div").Attr("test", "testvalue");
@@ -43,5 +60,59 @@ namespace TrainingTasks4
             Html html = Html.Tag("span").Attr("test", "testvalue");
             Assert.True("<span test=\"testvalue\"></span>" == html);
         }
+
+        [Test]
+        public void BasicHtmlBuilderWithTwoClasses()
+        {
+            Html html = Html.Tag("span").AddClass("test").AddClass("test2");
+            Assert.AreEqual("<span class=\"test test2\"></span>", html.ToString());
+        }
+
+        [Test]
+        public void BasicHtmlBuilder1()
+        {
+
+            Html html2 = Html.Tag("div");
+            html2.AddClass("hi");
+
+            Html html = new Html("span");
+            html.Attr("test", "1");
+
+            Assert.AreEqual("<span test=\"1\"></span>", html.ToString());
+        }
+
+        [Test]
+        public void BasicHtmlBuilder2()
+        {
+            Html html = new Html("span");
+            html.AddClass("test");
+
+            Assert.AreEqual("<span class=\"test\"></span>", meth(html));
+        }
+
+        [Test]
+        public void BasicHtmlBuilder3()
+        {
+            Html html = new Html("span");
+
+            Assert.AreEqual("<span></span>", html.ToString());
+        }
+
+        [Test]
+        public void BasicHtmlBuilder4()
+        {
+            Html html = Html.Tag("span");
+            html.Attr("test", "value");
+
+            object html1 = html;
+
+            Assert.AreEqual("<span test=\"value\"></span>", html1.ToString());
+        }
+
+        private string meth(string html)
+        {
+            return html;
+        }
+
     }
 }
