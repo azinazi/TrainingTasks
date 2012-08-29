@@ -21,9 +21,22 @@ namespace TrainingTasks4
             Assert.AreEqual("<input type=\"text\" name=\"Location\" value=\"St Kilda\" />", html.ToString());
         }
 
+        [Test]
+        public void BasicHtmlBuilderWithHelperWithClass()
+        {
+
+            InputData inputData = new InputData { Park = "Albert" };
+            HtmlHelper<InputData> htmlHelper = new HtmlHelper<InputData>(inputData);
+
+            var html = htmlHelper.InputFor(x => x.Location).AddClass("lake");
+
+            Assert.AreEqual("<input type=\"text\" name=\"Location\" value=\"Albert\" class=\"park\" />", html.ToString());
+        }
+
         public class InputData
         {
             public string Location { get; set; }
+            public string Park { get; set; }
         }
 
         [Test]
