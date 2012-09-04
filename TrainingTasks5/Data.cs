@@ -7,20 +7,6 @@ namespace TrainingTasks5
 {
     public class Data
     {
-
-        public bool WhereIf(bool condition, Func<Product, bool> predicate)
-        {
-            if (condition)
-                return true;
-            else
-                return false;
-        }
-
-        public IEnumerable<Product> Alternate(IEnumerable<Product> list)
-        {
-            return new List<Product>();
-        }
-
         public static IEnumerable<Product> GetProducts()
         {
             yield return new Product { ProductID = 1, ProductName = "Chai", Category = "Beverages", UnitPrice = 18.0000M, UnitsInStock = 39 };

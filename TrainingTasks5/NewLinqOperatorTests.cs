@@ -68,7 +68,7 @@ namespace CustomExtenstions
     using TrainingTasks5;
     public static class DataExtensions
     {
-        public static IEnumerable<Product> WhereIf<Product>(this IEnumerable<Product> source, bool condition, Func<Product, bool> predicate)
+        public static IEnumerable<T> WhereIf<T>(this IEnumerable<T> source, bool condition, Func<T, bool> predicate)
         {
             if (condition)
                 return source.Where(predicate);
@@ -77,20 +77,18 @@ namespace CustomExtenstions
         }
 
 
-        public static IEnumerable<Product> Alternate<Product>(this IEnumerable<Product> source, IEnumerable<Product> list)
+        public static IEnumerable<T> Alternate<T>(this IEnumerable<T> source, IEnumerable<T> list)
         {
 
-            foreach (var product1 in list)
-            {
-                yield return product1;
-            }
-
-            foreach (var product2 in source)
-            {
-                yield return product2;
-            }
-
+            using (IEnumerator<T> source1 = list.GetEnumerator())
+            using (IEnumerator<T> source2 = source.GetEnumerator())
+                while (source1.MoveNext() && source2.MoveNext())
+                {
+                    yield return source1.Current;
+                    yield return source2.Current;                   
+                }
         }
+
     }
 }
 
